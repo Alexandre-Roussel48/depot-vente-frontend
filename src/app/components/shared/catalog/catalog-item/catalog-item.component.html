@@ -1,0 +1,13 @@
+<mat-card appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>{{ item.gameName }}</mat-card-title>
+    <mat-card-subtitle>{{ item.gameEditor }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>Quantité: {{ item.qty }}</p>
+    <p>Prix unitaire: {{ item.unit_price }} €</p>
+  </mat-card-content>
+  <mat-card-footer>
+    <p>Vendeur: {{item.sellerName}} {{item.sellerSurname}}</p>
+  </mat-card-footer>
+</mat-card>

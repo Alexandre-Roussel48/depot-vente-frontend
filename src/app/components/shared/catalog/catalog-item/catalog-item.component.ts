@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CatalogItem } from '../../../models/catalog-item';
+import { CatalogItem } from '../../../../models/catalog-item';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
