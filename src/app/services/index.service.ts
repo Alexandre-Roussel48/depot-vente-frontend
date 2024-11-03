@@ -18,9 +18,14 @@ export class IndexService {
       .pipe(map((json) => Session.createFrom(json)));
   }
 
-  getCurrentCatalog(): Observable<CatalogItem[]> {
+  getCurrentCatalog(
+    query: string = '',
+    range: string = ''
+  ): Observable<CatalogItem[]> {
     return this.http
-      .get<CatalogItem[]>(`${environment.baseURL}/catalog`)
+      .get<
+        CatalogItem[]
+      >(`${environment.baseURL}/catalog?range=${range}&query=${query}`)
       .pipe(map((data) => data.map((json) => CatalogItem.createFrom(json))));
   }
 }
