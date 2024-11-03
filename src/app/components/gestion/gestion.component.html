@@ -1,1 +1,5 @@
-<p>gestion works!</p>
+@if (!isAuthenticated) {
+	<app-login (authEmitter)="updateAuth($event)"></app-login>
+} @else {
+	<p>Logged in !</p>
+}
