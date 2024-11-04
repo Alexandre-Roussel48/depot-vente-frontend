@@ -5,7 +5,7 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, tap, map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
 interface LoginResponse {
@@ -16,8 +16,6 @@ interface LoginResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  private isAuthenticated = false;
-
   constructor(private http: HttpClient) {}
 
   login(
@@ -31,13 +29,9 @@ export class AuthService {
       .post<LoginResponse>(`${environment.baseURL}/gestion/login`, body, {
         headers,
         observe: 'response',
+        withCredentials: true,
       })
       .pipe(
-        tap((response) => {
-          if (response.status === 200) {
-            this.isAuthenticated = true;
-          }
-        }),
         map((response) => {
           return {
             isAuthenticated: response.status === 200,
@@ -51,7 +45,18 @@ export class AuthService {
       );
   }
 
-  isUserAuthenticated(): boolean {
-    return this.isAuthenticated;
+  isUserAuthenticated(): Observable<boolean> {
+    return this.http
+      .get(`${environment.baseURL}/gestion/verify`, {
+        withCredentials: true,
+        responseType: 'text',
+      })
+      .pipe(
+        map(() => true),
+        catchError((error: HttpErrorResponse) => {
+          console.log(error);
+          return of(false);
+        })
+      );
   }
 }
