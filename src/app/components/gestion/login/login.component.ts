@@ -29,6 +29,7 @@ import { AuthService } from '../../../services/auth.service';
 export class LoginComponent {
   loginForm: FormGroup;
   login$!: Observable<{ isAuthenticated: boolean; message: string }>;
+  isLogged$!: Observable<boolean>;
   message!: string;
   @Output() authEmitter = new EventEmitter<boolean>();
 
@@ -39,6 +40,12 @@ export class LoginComponent {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
+    });
+    this.isLogged$ = this.as.isUserAuthenticated();
+    this.isLogged$.subscribe((isLogged) => {
+      if (isLogged) {
+        this.authEmitter.emit(isLogged);
+      }
     });
   }
 
