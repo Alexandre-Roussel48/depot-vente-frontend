@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpBackend } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Session } from '../models/session';
@@ -10,7 +10,11 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class IndexService {
-  constructor(private http: HttpClient) {}
+  private http: HttpClient;
+
+  constructor(handler: HttpBackend) {
+    this.http = new HttpClient(handler);
+  }
 
   getCurrentSession(): Observable<Session> {
     return this.http

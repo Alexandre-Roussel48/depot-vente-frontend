@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   ReactiveFormsModule,
   FormBuilder,
@@ -12,9 +12,10 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { Observable } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-cas',
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -23,40 +24,51 @@ import { AuthService } from '../../../services/auth.service';
     MatInputModule,
     MatButtonModule,
   ],
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  templateUrl: './cas.component.html',
+  styleUrl: './cas.component.scss',
 })
-export class LoginComponent {
+export class CasComponent {
+  redirect: string = '/gestion';
+
   loginForm: FormGroup;
-  login$!: Observable<{ isAuthenticated: boolean; message: string }>;
-  isLogged$!: Observable<boolean>;
+
+  message$!: Observable<string>;
   message!: string;
-  @Output() authEmitter = new EventEmitter<boolean>();
+
+  isLogged!: boolean;
 
   constructor(
     private fb: FormBuilder,
-    public as: AuthService
+    public as: AuthService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      if (params['redirect']) {
+        this.redirect = params['redirect'];
+        if (this.as.isAuthenticated()) {
+          this.router.navigate([]);
+        }
+      }
+    });
+
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
-    });
-    this.isLogged$ = this.as.isUserAuthenticated();
-    this.isLogged$.subscribe((isLogged) => {
-      if (isLogged) {
-        this.authEmitter.emit(isLogged);
-      }
     });
   }
 
   onLogin() {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
-      this.login$ = this.as.login(email, password);
-      this.login$.subscribe((login) => {
-        if (login) {
-          this.message = login.message;
-          this.authEmitter.emit(login.isAuthenticated);
+      this.message$ = this.as.login(email, password);
+      this.message$.subscribe((message) => {
+        if (message) {
+          this.message = message;
+          if (this.as.isAuthenticated()) {
+            this.router.navigate([this.redirect]);
+          }
+          this.router.navigate(['/gestion']);
         }
       });
     }
