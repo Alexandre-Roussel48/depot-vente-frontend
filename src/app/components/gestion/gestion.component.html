@@ -1,5 +1,21 @@
-@if (!isAuthenticated) {
-	<app-login (authEmitter)="updateAuth($event)"></app-login>
-} @else {
-	<p>Logged in !</p>
-}
+<div class="menu-container">
+  <mat-card class="main-card">
+    <mat-card-header>
+      <mat-icon>widgets</mat-icon>
+      <mat-card-title>Outil de gestion de Game Drop</mat-card-title>
+    </mat-card-header>
+    <div class="grid-container">
+      @for (item of items; track item.title) {
+        <div [routerLink]="item.route" routerLinkActive="active">
+          <mat-card class="grid-item">
+            <mat-card-header>
+              <mat-icon>{{ item.icon }}</mat-icon>
+              <mat-card-title>{{ item.title }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>{{ item.description }}</mat-card-content>
+          </mat-card>
+        </div>
+      }
+    </div>
+  </mat-card>
+</div>
