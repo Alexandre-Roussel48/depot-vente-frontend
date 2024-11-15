@@ -9,6 +9,8 @@ import { catchError, tap, map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
 interface LoginResponse {
+  expirationInSec: number;
+  role: string;
   message: string;
 }
 
@@ -17,7 +19,7 @@ interface LoginResponse {
 })
 export class AuthService {
   private _isAuthenticated = false;
-  private logoutTimer: ReturnType<typeof setTimeout>;
+  private logoutTimer!: ReturnType<typeof setTimeout>;
   private tokenExpiryTime: number | null = null;
   private role: string | null = null;
 
@@ -37,10 +39,10 @@ export class AuthService {
       })
       .pipe(
         tap((response) => {
-          this.setSession(response.body.expirationInSec, response.body.role);
+          this.setSession(response.body!.expirationInSec, response.body!.role);
         }),
         map((response) => {
-          return response.body.message;
+          return response.body!.message;
         }),
         catchError((error: HttpErrorResponse) => {
           const message = error.error.message;

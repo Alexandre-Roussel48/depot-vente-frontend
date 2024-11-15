@@ -46,9 +46,9 @@ export class CasComponent {
     this.activatedRoute.queryParams.subscribe((params) => {
       if (params['redirect']) {
         this.redirect = params['redirect'];
-        if (this.as.isAuthenticated()) {
-          this.router.navigate([]);
-        }
+      }
+      if (this.as.isAuthenticated()) {
+        this.router.navigate([this.redirect]);
       }
     });
 
@@ -68,7 +68,6 @@ export class CasComponent {
           if (this.as.isAuthenticated()) {
             this.router.navigate([this.redirect]);
           }
-          this.router.navigate(['/gestion']);
         }
       });
     }
