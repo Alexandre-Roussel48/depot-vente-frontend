@@ -1,6 +1,13 @@
-<mat-tab-group (selectedIndexChange)="navigateToTab($event)">
+<nav mat-tab-nav-bar [tabPanel]="tabPanel">
   @for (item of items; track item.title) {
-    <mat-tab label="{{item.title}}"></mat-tab>
+  <a mat-tab-link
+    [routerLink]="item.route" 
+    routerLinkActive="active"
+    (click)="activeLink = item.route"
+    [active]="activeLink == item.route">
+    {{item.title}}
+  </a>
   }
-</mat-tab-group>
+</nav>
+<mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
 <router-outlet></router-outlet>

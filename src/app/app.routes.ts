@@ -17,6 +17,7 @@ export const routes: Routes = [
     component: GestionComponent,
     canActivate: [authGuard],
     children: [
+      { path: '', redirectTo: 'sell', pathMatch: 'full' },
       { path: 'sell', component: SaleComponent },
       { path: 'deposit', component: DepositComponent },
       { path: 'balance', component: BalanceComponent },
