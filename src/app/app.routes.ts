@@ -1,6 +1,9 @@
 import { Routes } from '@angular/router';
 import { AppComponent } from './app.component';
+
 import { CasComponent } from './components/shared/cas/cas.component';
+import { PageNotFoundComponent } from './components/shared/page-not-found/page-not-found.component';
+
 import { GestionComponent } from './components/gestion/gestion.component';
 import { SaleComponent } from './components/gestion/sale/sale.component';
 import { DepositComponent } from './components/gestion/deposit/deposit.component';
@@ -27,5 +30,5 @@ export const routes: Routes = [
     ],
   },
   { path: '', component: AppComponent },
-  //	{path: '**', component: PageNotFoundComponent}
+  { path: '**', component: PageNotFoundComponent },
 ];

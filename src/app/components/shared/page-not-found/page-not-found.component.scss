@@ -1,0 +1,27 @@
+.not-found-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 25vh;
+
+  mat-card {
+    padding: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+
+    mat-card-title {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    p {
+      font-size: 16px;
+      color: #616161;
+    }
+
+    button {
+      margin-top: 10px;
+    }
+  }
+}
