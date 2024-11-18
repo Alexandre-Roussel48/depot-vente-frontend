@@ -11,6 +11,9 @@ import { BalanceComponent } from './components/gestion/balance/balance.component
 import { SellersComponent } from './components/gestion/sellers/sellers.component';
 import { StocksComponent } from './components/gestion/stocks/stocks.component';
 import { TransactionsComponent } from './components/gestion/transactions/transactions.component';
+
+import { AdminComponent } from './components/admin/admin.component';
+
 import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
@@ -28,6 +31,12 @@ export const routes: Routes = [
       { path: 'stocks', component: StocksComponent },
       { path: 'transactions', component: TransactionsComponent },
     ],
+  },
+  {
+    path: 'admin',
+    component: AdminComponent,
+    canActivate: [authGuard],
+    children: [],
   },
   { path: '', component: AppComponent },
   { path: '**', component: PageNotFoundComponent },
