@@ -1,27 +1,41 @@
+import { RealGame } from './real-game';
+
 export class ClientDetails {
-  dueAmount: number;
-  earnings: number;
-  soldGames: { name: string; quantity: number; unitPrice: number }[];
-  stockGames: { name: string; quantity: number }[];
+  due: number;
+  paidAmount: number;
+  soldRG: { id: string; unit_price: number; game_id: number }[];
+  stockedRG: { id: string; unit_price: number; game_id: number }[];
 
   constructor(
-    dueAmount: number,
-    earnings: number,
-    soldGames: { name: string; quantity: number; unitPrice: number }[],
-    stockGames: { name: string; quantity: number }[]
+    due: number,
+    paidAmount: number,
+    soldRG: { id: string; unit_price: number; game_id: number }[],
+    stockedRG: { id: string; unit_price: number; game_id: number }[]
   ) {
-    this.dueAmount = dueAmount;
-    this.earnings = earnings;
-    this.soldGames = soldGames;
-    this.stockGames = stockGames;
+    this.due = due;
+    this.paidAmount = paidAmount;
+    this.soldRG = soldRG;
+    this.stockedRG = stockedRG;
   }
 
   public static createFrom(json: ClientDetails): ClientDetails {
     return new ClientDetails(
-      json.dueAmount,
-      json.earnings,
-      json.soldGames,
-      json.stockGames
+      json.due,
+      json.paidAmount,
+      json.soldRG
+        ? json.soldRG.map((game: RealGame) => ({
+            id: game.id,
+            unit_price: game.unit_price,
+            game_id: game.game_id,
+          }))
+        : [],
+      json.stockedRG
+        ? json.stockedRG.map((game: RealGame) => ({
+            id: game.id,
+            unit_price: game.unit_price,
+            game_id: game.game_id,
+          }))
+        : []
     );
   }
 }

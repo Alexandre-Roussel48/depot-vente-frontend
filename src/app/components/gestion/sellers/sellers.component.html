@@ -5,25 +5,34 @@
     <mat-form-field class="full-width" appearance="fill">
         <mat-label>Email de l'utilisateur</mat-label>
         <input type="text" matInput [formControl]="emailControl" [matAutocomplete]="auto" placeholder="Email" />
-        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayEmail">
-            <mat-option *ngFor="let email of filteredClients$ | async" [value]="email">
-                {{ email }}
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let client of filteredOptions | async" [value]="client.email">
+                {{ client.email }}
             </mat-option>
         </mat-autocomplete>
-        <button mat-button matSuffix (click)="onSearch()">Chercher</button>
+     <button mat-button matSuffix (click)="onSearch()">Chercher</button> 
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Session</mat-label>
+        <mat-select [(value)]="selectedSession" [formControl]="sessionControl" required>
+            <mat-option *ngFor="let session of sessions" [value]="session">
+                {{ session.begin_date }} - {{ session.end_date }}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="sessionControl.hasError('required')">Sélectionnez une session</mat-error>
     </mat-form-field>
 
     <!-- Infos du client -->
-    <div *ngIf="selectedClient" class="client-info">
+    <div *ngIf="clientDetails" class="client-info">
 
         <mat-card>
             <h3>Somme due</h3>
-            <p>{{ clientDetails.dueAmount | currency: 'EUR' }}</p>
+            <p>{{ clientDetails.due | currency: 'EUR' }}</p>
         </mat-card>
 
         <mat-card>
             <h3>Gains</h3>
-            <p>{{ clientDetails.earnings | currency: 'EUR' }}</p>
+            <p>{{ clientDetails.paidAmount | currency: 'EUR' }}</p>
         </mat-card>
 
         <!-- Jeux vendus -->
@@ -32,9 +41,9 @@
                 <mat-panel-title>Jeux vendus</mat-panel-title>
             </mat-expansion-panel-header>
             <mat-list>
-                <mat-list-item *ngFor="let game of clientDetails?.soldGames">
-                    {{ game.name }} - Quantité: {{ game.quantity }} - Prix unitaire:
-                    {{ game.unitPrice | currency: 'EUR' }}
+                <mat-list-item *ngFor="let game of clientDetails.soldRG">
+                    {{ game.id }} - game_id : {{ game.game_id }} - Prix unitaire:
+                    {{ game.unit_price | currency: 'EUR' }}
                 </mat-list-item>
             </mat-list>
         </mat-expansion-panel>
@@ -45,8 +54,9 @@
                 <mat-panel-title>Jeux en stock</mat-panel-title>
             </mat-expansion-panel-header>
             <mat-list>
-                <mat-list-item *ngFor="let game of clientDetails?.stockGames">
-                    {{ game.name }} - Quantité: {{ game.quantity }}
+                <mat-list-item *ngFor="let game of clientDetails.stockedRG">
+                    {{ game.id }} - game_id : {{ game.game_id }} - Prix unitaire:
+                    {{ game.unit_price | currency: 'EUR' }}
                 </mat-list-item>
             </mat-list>
         </mat-expansion-panel>
