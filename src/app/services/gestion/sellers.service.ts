@@ -28,12 +28,9 @@ export class SellersService {
 
   getClientInfo(id: string, session: Session): Observable<ClientDetails> {
     const body = { id, session };
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http
-      .post<ClientDetails>(`${environment.baseURL}/gestion/client-info`, body, {
-        headers,
-      })
-      .pipe(map((json) => ClientDetails.createFrom(json)));
+      .post<ClientDetails>(`${environment.baseURL}/gestion/client-info`, body)
+      .pipe(map((data) => ClientDetails.createFrom(data)));
   }
 
   getAllSession(): Observable<Session[]> {

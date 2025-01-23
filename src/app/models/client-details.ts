@@ -3,14 +3,14 @@ import { RealGame } from './real-game';
 export class ClientDetails {
   due: number;
   paidAmount: number;
-  soldRG: { id: string; unit_price: number; game_id: number }[];
-  stockedRG: { id: string; unit_price: number; game_id: number }[];
+  soldRG: RealGame[];
+  stockedRG: RealGame[];
 
   constructor(
     due: number,
     paidAmount: number,
-    soldRG: { id: string; unit_price: number; game_id: number }[],
-    stockedRG: { id: string; unit_price: number; game_id: number }[]
+    soldRG: RealGame[],
+    stockedRG: RealGame[]
   ) {
     this.due = due;
     this.paidAmount = paidAmount;
@@ -24,16 +24,18 @@ export class ClientDetails {
       json.paidAmount,
       json.soldRG
         ? json.soldRG.map((game: RealGame) => ({
-            id: game.id,
             unit_price: game.unit_price,
-            game_id: game.game_id,
+            gameName: game.gameName,
+            gameEditor: game.gameEditor,
+            qty: game.qty,
           }))
         : [],
       json.stockedRG
         ? json.stockedRG.map((game: RealGame) => ({
-            id: game.id,
             unit_price: game.unit_price,
-            game_id: game.game_id,
+            gameName: game.gameName,
+            gameEditor: game.gameEditor,
+            qty: game.qty,
           }))
         : []
     );

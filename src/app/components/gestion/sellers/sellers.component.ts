@@ -3,7 +3,6 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { map, Observable, startWith, switchMap } from 'rxjs';
@@ -13,6 +12,7 @@ import { SellersService } from '../../../services/gestion/sellers.service';
 import { CommonModule } from '@angular/common';
 import { Session } from '../../../models/session';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'sellers',
@@ -24,8 +24,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatExpansionModule,
     MatSelectModule,
     MatButtonModule,
-    MatListModule,
     MatCardModule,
+    MatTableModule,
     ReactiveFormsModule,
   ],
   templateUrl: './sellers.component.html',
@@ -38,6 +38,8 @@ export class SellersComponent implements OnInit {
   selectedClient!: Client;
   selectedSession!: Session;
   clientDetails?: ClientDetails;
+  soldColumns: string[] = ['gameName', 'gameEditor', 'unit_price', 'qty'];
+  stockedColumns: string[] = ['gameName', 'gameEditor', 'unit_price', 'qty'];
 
   sessions: Session[] = [];
   constructor(private sellersService: SellersService) {}
@@ -53,6 +55,7 @@ export class SellersComponent implements OnInit {
 
     this.sellersService.getAllSession().subscribe((sessions) => {
       this.sessions = sessions;
+      console.log(this.sessions);
     });
   }
 
@@ -71,6 +74,7 @@ export class SellersComponent implements OnInit {
           .getClientInfo(this.selectedClient.id, this.selectedSession)
           .subscribe((clientDetails) => {
             this.clientDetails = clientDetails;
+            console.log(this.clientDetails);
           });
       }
     });

@@ -1,11 +1,18 @@
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+:host {
+  margin-top: 5vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.full-width {
-  width: 100%;
+.sellers-container {
+  width: 80%;
+}
+
+.sellers-content {
+  margin-top: 2vh;
+  display: flex;
+  justify-content: center;
 }
 
 .client-info {

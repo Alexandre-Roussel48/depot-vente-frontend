@@ -1,15 +1,27 @@
 export class RealGame {
-  id: string;
   unit_price: number;
-  game_id: number;
+  gameName: string;
+  gameEditor: string;
+  qty: number;
 
-  constructor(id: string, unit_price: number, game_id: number) {
-    this.id = id;
+  constructor(
+    unit_price: number,
+    gameName: string,
+    gameEditor: string,
+    qty: number
+  ) {
     this.unit_price = unit_price;
-    this.game_id = game_id;
+    this.gameName = gameName;
+    this.gameEditor = gameEditor;
+    this.qty = qty;
   }
 
   public static createFrom(json: RealGame): RealGame {
-    return new RealGame(json.id, json.unit_price, json.game_id);
+    return new RealGame(
+      json.unit_price,
+      json.gameName,
+      json.gameEditor,
+      json.qty
+    );
   }
 }
