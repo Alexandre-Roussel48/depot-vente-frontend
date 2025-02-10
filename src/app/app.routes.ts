@@ -15,6 +15,10 @@ import { TransactionsComponent } from './components/gestion/transactions/transac
 import { AdminComponent } from './components/admin/admin.component';
 
 import { authGuard } from './guards/auth.guard';
+import { GamesComponent } from './components/admin/games/games.component';
+import { UsersComponent } from './components/admin/users/users.component';
+import { ConfigComponent } from './components/admin/config/config.component';
+import { SessionsComponent } from './components/admin/sessions/sessions.component';
 
 export const routes: Routes = [
   { path: 'login', component: CasComponent },
@@ -36,7 +40,13 @@ export const routes: Routes = [
     path: 'admin',
     component: AdminComponent,
     canActivate: [authGuard],
-    children: [],
+    children: [
+      { path: '', redirectTo: 'game', pathMatch: 'full' },
+      { path: 'game', component: GamesComponent },
+      { path: 'user', component: UsersComponent },
+      { path: 'config', component: ConfigComponent },
+      { path: 'session', component: SessionsComponent },
+    ],
   },
   { path: '', component: AppComponent },
   { path: '**', component: PageNotFoundComponent },

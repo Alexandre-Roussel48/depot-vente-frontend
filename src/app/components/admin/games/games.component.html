@@ -1,0 +1,55 @@
+<div class="container">
+  <h1>Gestion des Jeux</h1>
+
+  <!-- Barre de recherche -->
+  <mat-form-field appearance="outline" class="search-bar">
+    <mat-label>Rechercher un jeu</mat-label>
+    <input matInput [(ngModel)]="searchQuery" (keyup.enter)="searchGames()" />
+    <button matSuffix mat-icon-button (click)="searchGames()">
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <!-- Bouton pour ajouter un jeu -->
+  <button mat-raised-button color="primary" (click)="openGameFormDialog()">
+    <mat-icon>add</mat-icon> Ajouter un jeu
+  </button>
+
+  <!-- Tableau des jeux -->
+  <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Colonne ID -->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+      <mat-cell *matCellDef="let game">{{ game.id }}</mat-cell>
+    </ng-container>
+
+    <!-- Colonne Nom -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>Nom</mat-header-cell>
+      <mat-cell *matCellDef="let game">{{ game.name }}</mat-cell>
+    </ng-container>
+
+    <!-- Colonne Éditeur -->
+    <ng-container matColumnDef="editor">
+      <mat-header-cell *matHeaderCellDef>Éditeur</mat-header-cell>
+      <mat-cell *matCellDef="let game">{{ game.editor }}</mat-cell>
+    </ng-container>
+
+    <!-- Colonne Actions -->
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+      <mat-cell *matCellDef="let game">
+        <button mat-icon-button color="primary" (click)="openGameFormDialog(game)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteGame(game.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <!-- En-tête et lignes -->
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+</div>

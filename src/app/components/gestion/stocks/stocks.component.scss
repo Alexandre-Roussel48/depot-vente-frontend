@@ -1,0 +1,30 @@
+.index-container {
+    margin-top: 25vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.catalog-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.catalog-filters {
+    margin-left: 2vh;
+    margin-right: 2vh;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+.catalog-search {
+    margin-left: 10vh;
+    margin-right: 10vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
