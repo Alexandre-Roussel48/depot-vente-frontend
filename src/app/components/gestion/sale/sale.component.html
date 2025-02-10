@@ -1,1 +1,41 @@
-<p>sale works!</p>
+<mat-card appearance="outlined" class="sale-container">
+  <mat-card-header>
+    <mat-card-title>Vendre</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="deposit-content">
+	  <mat-form-field appearance="outline" style="width: 60%;">
+	    <mat-label>Rechercher</mat-label>
+	    <input matInput type="text" placeholder="Tapez pour rechercher..." [(ngModel)]="query" [matAutocomplete]="auto"/>
+	    <button mat-icon-button matSuffix>
+	      <mat-icon>search</mat-icon>
+	    </button>
+	  </mat-form-field>
+	  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addToSelectedGames($event.option.value)">
+	    @for (option of games$ | async; track option) {
+	      <mat-option [value]="option">{{option.gameName}}, {{option.gameEditor}}</mat-option>
+	    }
+	  </mat-autocomplete>
+    <form [formGroup]="saleForm" (ngSubmit)="onSell()">
+      <div formArrayName="sale" class="deposit-list">
+        @for (gameControl of gamesFormArray.controls; track $index) {
+          <mat-card appearance="outlined" class="deposit-item" [formGroupName]="$index">
+            <mat-card-header>
+              <mat-card-title>{{selectedGames[$index].id}}, {{selectedGames[$index].gameName}}, {{selectedGames[$index].unit_price}} €</mat-card-title>
+              <mat-card-content>
+                <button mat-button color="warn" (click)="removeGame($index)">Supprimer</button>
+              </mat-card-content>
+            </mat-card-header>
+          </mat-card>
+        }
+      </div>
+      @if (selectedGames.length > 0) {
+        @if (saleForm.valid) {
+          <mat-label>Total: {{ getTotalPrice() }} €</mat-label>
+          <button mat-raised-button color="primary" type="submit" class="full-width">Vendre</button>
+        } @else {
+          <button mat-raised-button color="primary" type="submit" class="full-width" disabled>Vendre</button>
+        }
+      }
+    </form>
+  </mat-card-content>
+</mat-card>
