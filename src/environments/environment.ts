@@ -1,3 +1,3 @@
 export const environment = {
-  baseURL: 'http://localhost:5000/api',
+  baseURL: 'https://dv-alexleo-backend.cluster-ig4.igpolytech.fr/api',
 };
