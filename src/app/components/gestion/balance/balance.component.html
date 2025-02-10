@@ -1,1 +1,39 @@
-<p>balance works!</p>
+<mat-card appearance="outlined"  class="deposit-container">
+  <mat-card-header>
+    <mat-card-title>Bilans</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-card appearance="outlined" class="balance-item">
+      <mat-card-header>
+        <mat-card-title>Trésorerie totale</mat-card-title>
+        @if(total$ | async; as total) {
+        <mat-card-subtitle>{{total}} €</mat-card-subtitle>
+        }
+      </mat-card-header>
+    </mat-card>
+    <mat-card appearance="outlined" class="balance-item">
+      <mat-card-header>
+        <mat-card-title>Somme due aux vendeurs</mat-card-title>
+        @if(due$ | async; as due) {
+        <mat-card-subtitle>{{due}} €</mat-card-subtitle>
+        }
+      </mat-card-header>
+    </mat-card>
+    <mat-card appearance="outlined" class="balance-item">
+      <mat-card-header>
+        <mat-card-title>Frais de dépôts encaissés</mat-card-title>
+        @if(fee$ | async; as fee) {
+        <mat-card-subtitle>{{fee}} €</mat-card-subtitle>
+        }
+      </mat-card-header>
+    </mat-card>
+    <mat-card appearance="outlined" class="balance-item">
+      <mat-card-header>
+        <mat-card-title>Commissions prélevées</mat-card-title>
+        @if(commission$ | async; as commission) {
+        <mat-card-subtitle>{{commission}} €</mat-card-subtitle>
+        }
+      </mat-card-header>
+    </mat-card>
+  </mat-card-content>
+</mat-card>

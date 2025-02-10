@@ -3,6 +3,7 @@
   margin-right: 10vh;
   margin-top: 5vh;
   display: flex;
-  flex-direction: row;
-  justify-content: left;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 20px;
 }
