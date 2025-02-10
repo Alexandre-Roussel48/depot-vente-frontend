@@ -12,4 +12,4 @@ COPY . .
 
 EXPOSE 5002
 
-CMD ["serve", "-s", "dist", "-l", "5002"]
+CMD ["serve", "-s", "dist/frontend/browser", "-l", "5002"]
