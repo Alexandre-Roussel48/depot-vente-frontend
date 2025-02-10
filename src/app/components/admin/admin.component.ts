@@ -21,10 +21,6 @@ export class AdminComponent {
       route: '/admin/user',
     },
     {
-      title: 'Configurations',
-      route: '/admin/config',
-    },
-    {
       title: 'Sessions',
       route: '/admin/session',
     },

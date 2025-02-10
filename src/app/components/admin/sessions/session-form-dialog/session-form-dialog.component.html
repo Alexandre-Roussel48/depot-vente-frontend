@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>{{ session.id ? 'Modifier la session' : 'Ajouter une session' }}</h2>
+
+<mat-dialog-content>
+    <form (ngSubmit)="onSubmit()">
+        <!-- Commission (Number) -->
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Commission</mat-label>
+            <input matInput [(ngModel)]="session.commission" name="commission" type="number" required />
+        </mat-form-field>
+
+        <!-- Fees (Number) -->
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Fees</mat-label>
+            <input matInput [(ngModel)]="session.fees" name="fees" type="number" required />
+        </mat-form-field>
+
+        <!-- Affichage des dates uniquement si session n'existe pas -->
+        <div *ngIf="!session.id">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Date de début</mat-label>
+                <input matInput [matDatepicker]="begin_date" [(ngModel)]="session.begin_date" name="begin_date" required />
+                <mat-datepicker-toggle matSuffix [for]="begin_date"></mat-datepicker-toggle>
+                <mat-datepicker #begin_date></mat-datepicker>
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Date de fin</mat-label>
+                <input matInput [matDatepicker]="end_date" [(ngModel)]="session.end_date" name="end_date" required />
+                <mat-datepicker-toggle matSuffix [for]="end_date"></mat-datepicker-toggle>
+                <mat-datepicker #end_date></mat-datepicker>
+            </mat-form-field>
+
+            </div>
+
+        <div class="actions">
+            <button mat-raised-button type="button" mat-dialog-close>Annuler</button>
+            <button mat-raised-button color="primary" type="submit">
+                {{ session.id ? 'Modifier' : 'Ajouter' }}
+            </button>
+        </div>
+    </form>
+</mat-dialog-content>
